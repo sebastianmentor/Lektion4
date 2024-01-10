@@ -3,11 +3,6 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-
-db = SQLAlchemy()
-
 class Bok(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titel = db.Column(db.String(80), nullable=False)
@@ -38,5 +33,12 @@ class BestallningsDetalj(db.Model):
     bok_id = db.Column(db.Integer, db.ForeignKey('bok.id'), nullable=False)
     antal = db.Column(db.Integer, nullable=False)
     pris_per_enhet = db.Column(db.Float, nullable=False)
+
+class Tidningar(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    titel = db.Column(db.String(80), nullable=False)
+    forfattare = db.Column(db.String(50), nullable=False)
+    pris = db.Column(db.Float, nullable=False)
+    lagerantal = db.Column(db.Integer, nullable=False)
 
 # Lägg till andra tabeller som Anställda här om det behövs
