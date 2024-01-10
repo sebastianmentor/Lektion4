@@ -1,12 +1,28 @@
 {% extends "basetemplate.html" %}
 
 
+{% block title %}Böcker{% endblock %}
+
 {% block content %}
-<table>
-    {% for bok in all_books%}
-        <tr>
-            <td>{{ bok.titel }}</td>
-        </tr>
-    {%endfor%}
-</table>
-{% endblock%}
+    <h1>Våra Böcker</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Författare</th>
+                <th>ISBN</th>
+                <th>Pris</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bok in all_books %}
+            <tr>
+                <td>{{ bok.titel }}</td>
+                <td>{{ bok.forfattare }}</td>
+                <td>{{ bok.isbn }}</td>
+                <td>{{ bok.pris }} kr</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

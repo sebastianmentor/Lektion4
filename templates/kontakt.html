@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontakt</title>
-</head>
-<body>
-    <h1>Template är borta</h1>
-</body>
-</html>
+{% extends "basetemplate.html" %}
+
+{% block title %}Kontakt{% endblock %}
+
+{% block content %}
+    <h1>Kontakta Oss</h1>
+    <p>Har du frågor eller feedback? Tveka inte att kontakta oss!</p>
+
+    <form action="/skicka-kontakt" method="post">
+        <label for="namn">Namn:</label><br>
+        <input type="text" id="namn" name="namn" required><br>
+
+        <label for="email">E-post:</label><br>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="meddelande">Meddelande:</label><br>
+        <textarea id="meddelande" name="meddelande" required></textarea><br>
+
+        <input type="submit" value="Skicka">
+    </form>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/kontakt.js') }}"></script>
+{% endblock %}
