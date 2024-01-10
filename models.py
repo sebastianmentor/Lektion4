@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from faker import Faker
+import random
 
 db = SQLAlchemy()
 
@@ -42,3 +44,25 @@ class Tidningar(db.Model):
     lagerantal = db.Column(db.Integer, nullable=False)
 
 # Lägg till andra tabeller som Anställda här om det behövs
+
+
+def seed_data():
+    fake = Faker()
+
+    nr_of_books = Bok.query.count()
+    if nr_of_books < 500:
+        for _ in range(100):
+            title = fake.catch_phrase()
+            author = fake.name()
+            isbn = fake.isbn13()
+            price = random.randint(50, 400)
+            inventory = random.randint(0, 10000)
+
+            bok = Bok(titel=title,
+                    forfattare=author,
+                    isbn=isbn,
+                    pris=price,
+                    lagerantal=inventory)
+            db.session.add(bok)
+            db.session.commit()
+

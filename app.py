@@ -1,7 +1,6 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
-from models import db
+from models import db, seed_data, Bok
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/LLB'
@@ -18,7 +17,8 @@ def index():
 
 @app.route('/bocker')
 def bocker():
-    return render_template("bocker.html")
+    all_books = Bok.query.all()
+    return render_template("bocker.html", all_books=all_books)
 
 @app.route('/kontakt')
 def kontakt():
@@ -28,5 +28,6 @@ def kontakt():
 if __name__ == '__main__':
     with app.app_context():
         upgrade()
-    
+        seed_data()
+
     app.run(debug=True)

@@ -1,1 +1,12 @@
 {% extends "basetemplate.html" %}
+
+
+{% block content %}
+<table>
+    {% for bok in all_books%}
+        <tr>
+            <td>{{ bok.titel }}</td>
+        </tr>
+    {%endfor%}
+</table>
+{% endblock%}
