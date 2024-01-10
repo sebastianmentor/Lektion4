@@ -14,7 +14,15 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
-    return "Hej"
+    return render_template("index.html")
+
+@app.route('/bocker')
+def bocker():
+    return render_template("bocker.html")
+
+@app.route('/kontakt')
+def kontakt():
+    return render_template("kontakt.html")
 
 
 if __name__ == '__main__':

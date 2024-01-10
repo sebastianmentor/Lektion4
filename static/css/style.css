@@ -1,0 +1,49 @@
+/* Basstil */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header, footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsivitet */
+@media (max-width: 600px) {
+    main {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    nav a {
+        padding: 0 10px;
+    }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Lägg till ytterligare CSS-länkar här -->
+</head>
+<body>
+    <header>
+        <nav>
+            <!-- Navigationslänkar här -->
+            <a href="{{ url_for('index') }}">Hem</a>
+            <a href="{{ url_for('bocker') }}">Böcker</a>
+            <a href="{{ url_for('kontakt') }}">Kontakt</a>
+            <!-- Fler länkar kan läggas till här -->
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Huvudinnehållet kommer att infogas här från barnmallar -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2024 Lindas Lustfyllda Bokhandel</p>
+        <!-- Eventuell fotinformation -->
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Lägg till ytterligare JavaScript-länkar här -->
+</body>
+</html>
