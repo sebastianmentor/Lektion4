@@ -1,0 +1,32 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}Våra Kunder{% endblock %}
+
+{% block content %}
+    <h1>Kundlista</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Adress</th>
+                <th>E-post</th>
+                <th>Telefonnummer</th>
+                <th>Gå till</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kund in kunder %}
+            <tr>
+                <td>{{ kund.namn }}</td>
+                <td>{{ kund.adress }}</td>
+                <td>{{ kund.epost }}</td>
+                <td>{{ kund.telefonnummer }}</td>
+                <td>
+                    <!-- <a href="/kund/{{ kund.id }}" class="btn">Klick</a> -->
+                    <a href="{{url_for('kund',kundid=kund.id)}}" class="btn">Klick</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

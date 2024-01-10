@@ -79,9 +79,7 @@ def seed_data():
                 "telefonnummer": fake2.phone_number()
             }
             kunden_finns = Kund.query.filter_by(epost=kund['epost']).first()
-            print(Kund.query.filter_by(epost=kund['epost']))
-            print(Kund.query.filter_by(epost='candersson@example.com'))
-            print(Kund.query.filter_by(epost='candersson@example.com').first())
+            
             if not kunden_finns:    
                 kunder.append(kund)
                 nr_of_customers += 1
