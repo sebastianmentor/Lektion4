@@ -34,6 +34,7 @@ def kunder():
 def kund(kundid):
     våran_kund = Kund.query.filter_by(id=kundid).first()
     # kundens_beställningar = Bestallning.query.filter_by(kund_id=kundid).all()
+    
     return render_template("kund.html", kund=våran_kund, )
 
 
