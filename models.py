@@ -63,28 +63,41 @@ def seed_data():
                     isbn=isbn,
                     pris=price,
                     lagerantal=inventory)
+            
             db.session.add(bok)
             db.session.commit()
 
 
     nr_of_customers = Kund.query.count()
-    if nr_of_customers < 1000:
+    if nr_of_customers < 1500:
         fake2 = Faker('sv_SE')  # Svensk lokaliseringsinställning
+        epost_addresser = set()
+        
         kunder = []
         while nr_of_customers <= 1000:
             kund = {
                 "namn": fake2.name(),
                 "adress": fake2.address(),
-                "epost": fake2.email(),
+                # "epost": fake2.email(),
                 "telefonnummer": fake2.phone_number()
             }
-            kunden_finns = Kund.query.filter_by(epost=kund['epost']).first()
-            
-            if not kunden_finns:    
-                kunder.append(kund)
-                nr_of_customers += 1
+            nr_of_customers += 1
 
-        # Exempel på att skapa 10 fejkade kunder
+        total_nr_of_new_customers = len(kunder)
+        
+        while total_nr_of_new_customers > 0:
+            epost = fake2.email()            
+            kunden_finns = Kund.query.filter_by(epost=epost).first()
+            if kunden_finns or epost in epost_addresser:
+                pass
+            else:
+                epost_addresser.add(epost)
+
+        epost_addresser = list(epost_addresser)
+        assert len(kunder) == len(epost_addresser)
+        for kund in kunder:
+                kund["epost"] = epost_addresser.pop()
+                        
         for kund in kunder:
             db.session.add(Kund(**kund))
             db.session.commit()
