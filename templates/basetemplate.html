@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Lägg till ytterligare CSS-länkar här -->
 </head>
 <body>
     <header>
         <nav>
             <!-- Navigationslänkar här -->
-            <a href="{{ url_for('index') }}">Hem</a>
-            <a href="{{ url_for('bocker') }}">Böcker</a>
-            <a href="{{ url_for('kontakt') }}">Kontakt</a>
-            <a href="{{ url_for('kunder')}}">Kunder</a>
+            
+            <a href="{{ url_for('index') }}" class="{{'active' if active_page == 'start_page' }}">Hem</a>
+            <a href="{{ url_for('bocker') }}" class="{{'active' if active_page == 'bocker_page' }}">Böcker</a>
+            <a href="{{ url_for('kontakt') }}"class="{{'active' if active_page == 'kontakt_page' }}">Kontakt</a>
+            <a href="{{ url_for('kunder')}}"class="{{'active' if active_page == 'kund_page' }}">Kunder</a>
             <!-- Fler länkar kan läggas till här -->
         </nav>
     </header>

@@ -26,7 +26,11 @@
         <tbody>
             {% for bestallning in kund.bestallningar %}
             <tr>
-                <td>{{ bestallning.id }}</td>
+                <td>
+                    <a href="{{url_for('orders', bestallningid=bestallning.id)}}">
+                    {{ bestallning.id }}
+                    </a>
+                </td>
                 <td>{{ bestallning.bestallningsdatum }}</td>
                 <td>{{ bestallning.leveransstatus }}</td>
                 <!-- Fler datakolumner kan läggas till här -->
