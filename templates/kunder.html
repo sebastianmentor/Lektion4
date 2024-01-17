@@ -6,16 +6,45 @@
     <h1>Kundlista</h1>
     <table>
         <thead>
+            {{ page  }} av totalt: {{pages}}
             <tr>
-                <th>Namn</th>
-                <th>Adress</th>
-                <th>E-post</th>
-                <th>Telefonnummer</th>
+                <th>Namn
+                    <a href="{{url_for('kunder', sort_column = 'namn', sort_order = 'asc',page = page)}}">
+                        <i class='bx bxs-up-arrow'></i>
+                    </a>
+                    <a href="{{url_for('kunder', sort_column = 'namn', sort_order = 'desc',page = page)}}">
+                        <i class='bx bxs-down-arrow'></i>
+                    </a>
+                </th>
+                <th>Adress
+                    <a href="{{url_for('kunder', sort_column = 'adress', sort_order = 'asc',page = page)}}">
+                        <i class='bx bxs-up-arrow'></i>
+                    </a>
+                    <a href="{{url_for('kunder', sort_column = 'adress', sort_order = 'desc',page = page)}}">
+                        <i class='bx bxs-down-arrow'></i>
+                    </a>
+                </th>
+                <th>E-post
+                    <a href="{{url_for('kunder', sort_column = 'epost', sort_order = 'asc',page = page)}}">
+                        <i class='bx bxs-up-arrow'></i>
+                    </a>
+                    <a href="{{url_for('kunder', sort_column = 'epost', sort_order = 'desc',page = page)}}">
+                        <i class='bx bxs-down-arrow'></i>
+                    </a>
+                </th>
+                <th>Telefonnummer
+                    <a href="{{url_for('kunder', sort_column = 'telefonnummer', sort_order = 'asc',page = page)}}">
+                        <i class='bx bxs-up-arrow'></i>
+                    </a>
+                    <a href="{{url_for('kunder', sort_column = 'telefonnummer', sort_order = 'desc',page = page)}}">
+                        <i class='bx bxs-down-arrow'></i>
+                    </a>
+                </th>
                 <th>Gå till</th>
             </tr>
         </thead>
         <tbody>
-            {% for kund in kunder %}
+            {% for kund in kunderna %}
             <tr>
                 <td>{{ kund.namn }}</td>
                 <td>{{ kund.adress }}</td>
@@ -23,10 +52,55 @@
                 <td>{{ kund.telefonnummer }}</td>
                 <td>
                     <!-- <a href="/kund/{{ kund.id }}" class="btn">Klick</a> -->
-                    <a href="{{url_for('kund',kundid=kund.id)}}" class="btn">Klick</a>
+                    <a href="{{url_for('kund',kundid=kund.id)}}" class="btn"><i class='bx bx-run'></i></a>
                 </td>
             </tr>
             {% endfor %}
+
+            <!-- <tr>
+                {% if  has_next %}
+                <td>
+                    <a href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page + 1)}}" >
+                        Next
+                    </a>
+                </td>
+                {% endif %}
+                {% if has_prev %}
+                <td>
+                    <a href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page - 1)}}">
+                        Prev
+                    </a>
+                </td>
+                {% endif %}
+            </tr> -->
         </tbody>
     </table>
+    <ul class="pagination">
+        {% if has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page - 1)}}" aria-label="Föregående">
+                &laquo; Föregående
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link">&laquo; Föregående</a>
+        </li>
+        {% endif %}
+        
+        <!-- Dynamisk generering av sidnummer kan läggas till här om så önskas -->
+        
+        {% if has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page + 1)}}" aria-label="Nästa">
+                Nästa &raquo;
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link">Nästa &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+
 {% endblock %}

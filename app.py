@@ -19,6 +19,7 @@ def index():
 def bocker():
     sort_column = request.args.get('sort_column', 'titel')
     sort_order = request.args.get('sort_order', 'asc')
+    page = request.args.get('page', 1, type=int)
 
     all_books = Bok.query.all()
 
@@ -27,7 +28,8 @@ def bocker():
         all_books=all_books, 
         active_page = 'bocker_page', 
         sort_column=sort_column,
-        sort_order=sort_order)
+        sort_order=sort_order,
+        page=page)
 
 @app.route('/bocker/bok/<bokid>')
 def bok(bokid):
@@ -42,8 +44,47 @@ def kontakt():
 
 @app.route('/kunder')
 def kunder():
-    alla_kunder = Kund.query.all()
-    return render_template("kunder.html", kunder=alla_kunder, active_page = 'kund_page')
+    sort_column = request.args.get('sort_column', 'namn')
+    sort_order = request.args.get('sort_order', 'asc')
+    page=request.args.get('page', 1, type=int)
+
+    if sort_order == 'asc':
+        if sort_column == 'namn':
+            alla_kunder = Kund.query.order_by(Kund.namn.asc())
+        elif sort_column == 'epost':
+            alla_kunder = Kund.query.order_by(Kund.epost.asc())
+        elif sort_column == 'telefonnummer':
+            alla_kunder = Kund.query.order_by(Kund.telefonnummer.asc())
+        elif sort_column == 'adress':
+            alla_kunder = Kund.query.order_by(Kund.adress.asc())
+        else:
+            raise ValueError('Ingen match på acs')
+    else:
+        if sort_column == 'namn':
+            alla_kunder = Kund.query.order_by(Kund.namn.desc())
+        elif sort_column == 'epost':
+            alla_kunder = Kund.query.order_by(Kund.epost.desc())
+        elif sort_column == 'telefonnummer':
+            alla_kunder = Kund.query.order_by(Kund.telefonnummer.desc())
+        elif sort_column == 'adress':
+            alla_kunder = Kund.query.order_by(Kund.adress.desc())
+        else:
+            raise ValueError('Ingen match på desc')
+        
+        
+    pa_obj = alla_kunder.paginate(page=page, per_page=20,error_out=True)
+
+    return render_template(
+        "kunder.html", 
+        kunderna=pa_obj.items, 
+        active_page = 'kund_page',
+        page=page ,
+        pages = pa_obj.pages,
+        has_next=pa_obj.has_next,
+        has_prev=pa_obj.has_prev,
+        sort_column=sort_column,
+        sort_order=sort_order
+        )
 
 
 @app.route('/kund/<kundid>')
