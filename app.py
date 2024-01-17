@@ -20,6 +20,7 @@ def bocker():
     sort_column = request.args.get('sort_column', 'titel')
     sort_order = request.args.get('sort_order', 'asc')
     page = request.args.get('page', 1, type=int)
+    
 
     all_books = Bok.query.all()
 
@@ -47,30 +48,29 @@ def kunder():
     sort_column = request.args.get('sort_column', 'namn')
     sort_order = request.args.get('sort_order', 'asc')
     page=request.args.get('page', 1, type=int)
+    search_word = request.args.get('q', '')
 
-    if sort_order == 'asc':
-        if sort_column == 'namn':
-            alla_kunder = Kund.query.order_by(Kund.namn.asc())
-        elif sort_column == 'epost':
-            alla_kunder = Kund.query.order_by(Kund.epost.asc())
-        elif sort_column == 'telefonnummer':
-            alla_kunder = Kund.query.order_by(Kund.telefonnummer.asc())
-        elif sort_column == 'adress':
-            alla_kunder = Kund.query.order_by(Kund.adress.asc())
-        else:
-            raise ValueError('Ingen match på acs')
+    sökta_kunder = Kund.query.filter(
+        Kund.namn.like("%" + search_word+ "%") |
+        Kund.adress.like("%" + search_word+ "%") |
+        Kund.epost.like("%" + search_word+ "%") |
+        Kund.telefonnummer.like("%" + search_word+ "%") 
+    )
+
+    if sort_column == 'namn':
+        search_by = Kund.namn
+    elif sort_column == 'epost':
+        search_by = Kund.epost
+    elif sort_column == 'telefonnummer':
+        search_by = Kund.telefonnummer
+    elif sort_column == 'adress':
+        search_by = Kund.adress
     else:
-        if sort_column == 'namn':
-            alla_kunder = Kund.query.order_by(Kund.namn.desc())
-        elif sort_column == 'epost':
-            alla_kunder = Kund.query.order_by(Kund.epost.desc())
-        elif sort_column == 'telefonnummer':
-            alla_kunder = Kund.query.order_by(Kund.telefonnummer.desc())
-        elif sort_column == 'adress':
-            alla_kunder = Kund.query.order_by(Kund.adress.desc())
-        else:
-            raise ValueError('Ingen match på desc')
-        
+        raise ValueError('Ingen match på acs')
+    
+    search_by = search_by.asc() if sort_order == 'asc' else search_by.desc()
+
+    alla_kunder = sökta_kunder.order_by(search_by)
         
     pa_obj = alla_kunder.paginate(page=page, per_page=20,error_out=True)
 
@@ -83,7 +83,8 @@ def kunder():
         has_next=pa_obj.has_next,
         has_prev=pa_obj.has_prev,
         sort_column=sort_column,
-        sort_order=sort_order
+        sort_order=sort_order,
+        q=search_word
         )
 
 

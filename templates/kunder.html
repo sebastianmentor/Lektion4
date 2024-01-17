@@ -7,6 +7,10 @@
     <table>
         <thead>
             {{ page  }} av totalt: {{pages}}
+            <form method="get">
+                <input type="text" name="q" placeholder="Sök kunder..." required value="{{q}}">
+                <button type="submit">Sök</button>
+            </form>
             <tr>
                 <th>Namn
                     <a href="{{url_for('kunder', sort_column = 'namn', sort_order = 'asc',page = page)}}">
@@ -57,22 +61,6 @@
             </tr>
             {% endfor %}
 
-            <!-- <tr>
-                {% if  has_next %}
-                <td>
-                    <a href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page + 1)}}" >
-                        Next
-                    </a>
-                </td>
-                {% endif %}
-                {% if has_prev %}
-                <td>
-                    <a href="{{url_for('kunder', sort_column = sort_column, sort_order = sort_order, page = page - 1)}}">
-                        Prev
-                    </a>
-                </td>
-                {% endif %}
-            </tr> -->
         </tbody>
     </table>
     <ul class="pagination">
